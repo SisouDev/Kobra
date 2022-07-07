@@ -1,0 +1,17 @@
+import time
+from utils.browser import make_chrome_browser
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from posts.tests.test_post_base import PostMixin
+
+
+class PostBaseFunctionalTest(StaticLiveServerTestCase, PostMixin):
+    def setUp(self) -> None:
+        self.browser = make_chrome_browser('--headless')
+        return super().setUp()
+
+    def tearDown(self) -> None:
+        self.browser.quit()
+        return super().tearDown()
+
+    def sleep(self, seconds=5):
+        time.sleep(seconds)

@@ -1,0 +1,16 @@
+{% if request.user.is_authenticated %}
+        <div class="d-block-flex mw-100 w-100 bg-light rounded">
+            <p class="text-center font-monospace">
+                <h5 class="text-center font-monospace">Your are logged in as: <br>
+                                    <span style="font-family: Verdana, Geneva, Tahoma, sans-serif;"> 
+                                       >> "  {{ request.user.username|capfirst}} " << </span> <br>
+                    Please,
+                    <form action="{% url 'authors:logout' %}" method="POST">
+                        {% csrf_token %}
+                            <input type="hidden" name="username" value="{{ request.user.username }}">
+                        <button type="submit" id="botao2" class="btn btn-secondary btn-sm">Click here to logout.</button>
+                    </form>     
+                </h5>
+            </p>
+        </div>
+{% endif %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %} New post | Kobra Python {% endblock %}
+
+{% block dashboard %}
+
+<span class="mt-0">
+    <a class="text-dark" href="{% url 'authors:dashboard' %}">
+    <i id="back" class="fa-solid fa-backward mt-0"></i>
+    </a>
+</span>
+<div class="container bg-light">
+    <p class="my-class font-monospace fs-5">New Post</p>
+    <div class="row">
+        <div class="col-9">
+            <form action="{{ form_action }}" method="POST" class="row">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="col-12 d-grid">
+                    <label id="label-form" for="{{ field.id_for_label }}" class="input-group-text mt-2     text-dark">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <span class="font-monospace" style="background-color: rgba(248, 11, 11, 0.178);">
+                        {{ field.errors }}
+                    </span>
+                    {% endif %}
+                    {% if field.help_text %}
+                    <span class="font-monospace">
+                        {{ field.help_text }}
+                    </span>
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+                <div id="botaolegal">
+                    <button class="btn btn-primary" id="botao" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-3">
+            <section>
+                <h5 class="text-center">
+                    Welcome to new post page {{ user }}
+                </h5>
+            </section>
+            <aside class="mb-2">
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Dashboard</div>
+                            Click here to go back...
+                        </div>
+                        <span id="bg-pink" class="badge bg-primary rounded-pill"><a
+                                class="text-white text-decoration-none"
+                                href="{% url 'authors:dashboard' %}">⚈</a></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Logout</div>
+                            Click here to logout...
+                        </div>
+                        <span id="bg-pink2" class="badge bg-primary rounded-pill"><a
+                                class="text-white text-decoration-none"
+                                href="{% url 'authors:logout' %}">⚈</a></span>
+                    </li>
+                </ol>
+                    {% if messages %}
+                    <div class="d-block-flex p-2 text-center">
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+            </aside>
+        </div>
+    </div>
+</div>
+
+
+    {% endblock %}

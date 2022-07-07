@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %} Dashboard | Kobra Python {% endblock%}
+{% block dashboard %}
+
+<div class="container-fluid ms-5 pt-0 mt-0 mb-2 bg-light">
+  <div class="row g-5 mw-100 w-100 mb-2">
+    
+    <div class="col-md-3 justify-content-end mt-3 order-2">
+      <div class="list-group" >
+
+        <button type="button" id="dashboard-btn" class="list-group-item list-group-item-action active text-dark" aria-current="true">
+          <i class="fa-solid fa-user text-dark"></i> You logged with <b> ( {{ user }} ) </b>
+        </button>
+        
+        <form action="{% url 'authors:dashboard_new_post' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="username" value="{{ request.user.username }}">
+        <button type="submit" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-share-from-square text-dark"></i> New post
+        </button>
+      </form>
+        
+
+        <form action="{% url 'authors:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="username" value="{{ request.user.username }}">
+          <button type="submit" class="list-group-item list-group-item-action"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </form> 
+      </div>
+        <p>
+            <div>
+              <aside>
+                <p class="font-monospace fs-6">
+                  I present to you Affonso, my kitten, in this beautiful image he is yawning with sleep! I just woke up on a beautiful freezing cold night here in the south of the state of Minas Gerais (Brazil)... :)
+                </p>
+              </aside>
+              <span class="border border-4 ">
+              <img src="/media/Affonso.jpeg" class="img-thumbnail p-2" alt="...">
+            </span>
+            </div>
+            <div>
+              <aside>
+                <p class="font-monospace fs-6">
+                  And in the next image, as you can see, the yawn was even stronger, to the point that you, dear reader of this blog, were able to see the entire dental arch of the animal Affonso (which by the way is in perfect condition) still good, isn't it?
+                </p>
+              </aside>
+              <span class="border border-4 ">
+              <img src="/media/Affonsotwo.jpeg" class="img-thumbnail p-2" alt="...">
+            </span>
+            <p class="font-monospace fs-6">
+              Anyway, Affonso thank you for all the love for you to enjoy his image on your screen! <br>
+              Maybe next time I'll update the images, if it helps and comes out more photogenic in the images...
+            </p>
+            </div>
+
+            {% if messages %}
+            <div class="d-block-flex p-2 text-center">
+                {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+        </p>
+    </div>
+
+    <div class="col-md-9 mb-2">
+
+      <h3 class="text-center font-monospace">
+        <span>Dashboard ({{ user }})</span>
+      </h3>
+
+       
+      <div class="card-group mb-2">
+        {% for post in posts %}
+        <div class="card w-100 h-50">
+          {% if post.cover %}
+            <img src="{{ post.cover.url }}" class="card-img-top w-100 h-50" alt="...">
+            {% else %}
+            <img src="https://source.unsplash.com/500x500/?cat" class="card-img-top w-100 h-50" alt="...">
+            {% endif %}
+            <div class="card-body mh-75">
+              <h5 class="card-title"><a class="text-decoration-none text-dark" href="{% url 'authors:dashboard_post_edit' post.id %}">
+                <form class="d-inline form-delete" method="POST" action="{% url 'authors:dashboard_post_delete'%}">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ post.id }}">
+                  <button class="btn btn-sm" >❌</button>
+                </form>
+                {{ post.title|truncatechars:25 }}</h5></a>
+              <p class="card-text overflow-auto">{{ post.description|truncatechars:50 }}</p>
+              <p class="card-text"><small class="text-muted">{{ post.created_at }}</small></p>  
+            </div>
+        </div>
+        {% empty %}
+            <h5 class="text-center justify-content-center font-monospace">You dont have any posts</h5>
+        {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock dashboard %}
+

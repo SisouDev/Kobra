@@ -1,0 +1,23 @@
+<div class="mb-0">
+    {% if is_paginated %}
+    <nav aria-label="Page navigation example mb-0">
+        <ul class="pagination p-1 mb-0">
+            {% for number in page_obj.paginator.page_range %}
+            <li id="pagination" class="page-item {% if page_obj.number == number %}active{% endif %}">
+                <a class="page-link text-black" href="?page={{ number }}">{{ number }}</a>
+            </li>
+            {% endfor %}
+            {% if page_obj.has_previous %}
+            <li id="pagination" class="page-item">
+                <a class="page-link text-black" href="?page={{ page_obj.previous_page_number }}"> << </a>
+            </li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li id="pagination" class="page-item">
+                <a class="page-link text-black" href="?page={{ page_obj.next_page_number }}"> >> </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+</div>

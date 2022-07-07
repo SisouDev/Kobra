@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block title %} Edit post | Kobra Python {%endblock%} 
+
+{% block conteudo %}
+
+<div class="col w-100">
+  <span class="mt-0">
+    <a class="text-dark" href="{% url 'authors:dashboard' %}">
+    <i id="back" class="fa-solid fa-backward mt-0"></i>
+    </a>
+  </span>
+  
+  <div class="col justify-content-center w-100 pt-0">
+    <h2
+      class="text-center p-2 text-dark rounded"
+      style="font-family: 'Courier New', Courier, monospace"
+>
+      Edit your post here ...
+    </h2>
+    {% if messages %}
+            <div class="d-block-flex p-2 text-center">
+                {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+      {% endif %}
+    
+    <div class="d-grid gap-3">
+      <div class="p-2"></div>
+    </div>
+  </div>
+
+  <div  class="col justify-content-center w-75 ms-5 ps-5 me-0 pe-0">
+    <form id="dashboard2" class="ms-5 ps-5 me-0 pe-0" action="{{ form_action }}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+    <div class="input-group row mb-3">
+      {% for field in form %}
+      <label
+        id="label-form"
+        for="{{ field.id_for_label }}"
+        class="input-group-text mt-2 text-dark">
+        {{ field.label }}</label>
+      {{ field }}
+      <div class="row">
+        {% if field.name == 'cover' and field.value.url %}
+            <div id="testi" class="col-6 d-flex flex-nowrap p-2">
+                <img id="cover-ph" class="w-100 h-100 d-flex ps-5 ms-5" src="{{ field.value.url }}" />
+                    {% endif %}
+                    {% if field.name == 'image_post' and field.value.url %}
+                <img class="w-100 d-flex" src="{{ field.value.url }}" />
+            </div>
+        {% endif %}
+      </div>
+      
+      {% endfor %}
+    </div>
+    
+    <div>
+        <span class="p-5"></span>
+        <div class="d-grid gap-2" id="botao2">
+            <button class="btn btn-primary" id="botao" type="submit">Submit</button>
+        </div>
+    </div>
+  </form>
+    </div>
+  </div>
+
+  {% endblock conteudo %}
+</div>

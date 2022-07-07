@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %} {{post.title}} {% endblock title %}
+
+{% block conteudo %}
+
+
+<div class="card-body ms-2 me-2">
+
+    <a href="{% url 'posts:post' post.pk %}" class="card-link text-decoration-none text-black">
+        <h5 style="text-align: center; font-size: 25px;" class="card-title mb-2 pb-3">
+            {{ post.title }}
+        </h5>
+    </a>
+
+    <div class="card pt-1">
+        <div style="background-color: #2b2b2b2c; padding-left: 2px; font-size: 18px;" class="card-body">
+
+            {{ post.intro }}
+
+        </div>
+    </div>
+
+    <p class="card-text pt-3 ms-2 me-2">
+        {% if content_is_html is True %}
+        {{ post.content|safe }}
+        {% else %}
+        {{ post.content|linebreaksbr }}
+        {% endif %}
+
+        {% if post.tags.all %}
+            <p>
+                <small class="text-muted">
+                    Tags:
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'posts:tag' tag.slug %}" class="text-black badge-secondary">
+                            {{ tag.name }}
+                        </a>
+                    {% endfor %}
+                </small>
+            </p>
+        {% endif %}
+        
+    </p>
+</div>
+
+
+
+<img id="image-post" src="{{ post.image_post.url }}"
+    style="height: 400px; width: 1200px; padding-bottom: 20px; overflow: hidden; border: 2.2px solid #2b2b2b21" class="card-img-bottom mt-0" alt="...">
+
+
+
+<div style="padding-top: 10px ; padding-left: 20px;" id="author" class="author card-header-pills mb-3">
+
+    <span class="author-item">
+        <i class="fas fa-user"></i>
+        {% if post.author is not None %}
+            {% if post.author.first_name %}
+                {{ post.author.first_name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}
+        {% else %}
+            Mysterious
+        {% endif %}
+    </span>
+
+    <span class="author-item">
+        <i class="fas fa-calendar-alt"></i>
+        {{ post.created_at|date:"d/m/y" }}
+    </span>
+
+    <span class="author-item">
+        <a class="text-black" href="{% url 'posts:category' post.category.id %}">
+            <i id="icone-categoria" class="fa-solid fa-laptop-code"></i>
+            {% if post.category is not None %}
+            <span>{{ post.category.get_name_display }}</span>
+            {% endif %}
+        </a>
+
+    </span>
+</div>
+
+
+
+{% endblock conteudo %}

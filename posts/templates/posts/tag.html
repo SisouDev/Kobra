@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} {{ page_title }} | Kobra Python {% endblock title %}
+
+
+{% block conteudo %}
+        {% for post in posts %}
+        {% include 'partials/post.html' %}
+        {% empty %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <h1 style="font-size: 25px; border: 0.5px solid rgb(230, 107, 124); border-radius: 50%;" class="ps-5 ms-5 text-center">
+                    Nothing Here.
+                </h1>
+            </div>
+        </div>
+        {% endfor %}
+    
+{% endblock conteudo %}

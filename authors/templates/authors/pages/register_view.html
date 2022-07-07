@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %} Register | Kobra Python {% endblock %}
+{% block conteudo %}
+<div class="col justify-content-center w-100 pt-0">
+    <h3 class="text-center font-monospace">
+        <span>Register</span>
+    </h3>
+    <p class="text-center font-monospace"> Your data is necessary for your registration and later for your login on our platform, if you want to hire our services in the navigation menu you will find it in the "contact us" tab.</p>
+
+    <div class="col justify-content-center w-100">
+        <form action="{% url 'authors:create' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group row">
+                {% for field in form %}
+                <label for="{{ field.id_for_label }}" class="input-group-text">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <span class="font-monospace">
+                        {{ field.help_text }}
+                    </span>
+                    {% endif %}
+
+                    {% if field.errors %}
+                    <span class="font-monospace" style="background-color: rgba(248, 11, 11, 0.178);">
+                        {{ field.errors }}
+                    </span>
+                    {% endif %}
+
+                {% endfor %}
+
+                <div class="col justify-content-center w-100 pt-0"> 
+                    {% if form.errors %}
+                    <div class="alert alert-warning">
+                    There are errors in the form, please fix them and send again.
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+            
+            
+            {% if messages %}
+            <div class="d-block-flex p-2 text-center">
+                {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+
+            <div>
+                <span class="p-5"></span>
+                <div class="d-grid gap-2" id="botao2">
+                    <button class="btn btn-primary" id="botao" type="submit">Submit</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

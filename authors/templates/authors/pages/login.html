@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %} Login | Kobra Python {% endblock %}
+{% block conteudo %}
+<div class="col justify-content-center w-100 pt-0">
+    <h2 class="text-center bg-dark p-2 text-dark bg-opacity-10 rounded" style="font-family: 'Courier New', Courier, monospace;">
+            Login
+    </h2>
+    {% include 'authors/pages/partials/logged.html' %}
+    <p class="text-center font-monospace"> Login with your data on this tab, if you want to register, please enter the 'register' tab in the navigation menu above, or if you want to hire our services on the contact us tab.</p>
+
+    
+    {% if messages %}
+    <div class="d-block-flex p-2 text-center">
+            {% for message in messages %}
+    <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if not user.is_authenticated %}
+    <div class="col justify-content-center">
+        <form id="main-form" class="justify-content-center main-form" action="{{ redirect }}" method="POST">
+            {% csrf_token %}
+            <div class="input-group d-block-flex  h-50 justify-content-center pe-5">
+                {% for field in form %}
+                <label for="{{ field.id_for_label }}" class="input-group-text h-50">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <span class="font-monospace">
+                        {{ field.help_text }}
+                    </span>
+                    {% endif %}
+
+                    {% if field.errors %}
+                    <span class="font-monospace">
+                        {{ field.errors }}
+                    </span>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+            <div>
+                <span class="p-5"></span>
+                <div class="d-grid gap-2" id="botao2">
+                    <button class="btn btn-primary" id="botao" type="submit">Submit</button>
+                </div>
+            </div>
+
+        </form>
+        
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

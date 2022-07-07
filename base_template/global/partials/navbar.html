@@ -1,0 +1,53 @@
+<nav id="menu-nav" class="navbar menu navbar-expand-lg navbar-light bg-light">
+
+    <div class="container-fluid">
+
+        <nav id="logo-nav" class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'posts:home' %}">
+                    <img id="ico-nav" src="https://svgsilh.com/svg/146005-171717.svg" alt="" width="30"
+                        height="24" class="d-inline-block align-text-top me-0 pe-0">
+                    <span class="grey-text ms-0 ps-0" style="font-size: 20px;">obra Python</span>
+                </a>
+            </div>
+        </nav>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse"  id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                    <li id="home" class="nav-item">
+                        <a class="nav-link active grey-text" href="{% url 'posts:home' %}">Home</a>
+                    </li>
+
+                    <li id="dropdown" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle grey-text" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                    Register
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item grey-text" href="{% url 'authors:register' %}">Register</a></li>
+                            <li><a class="dropdown-item grey-text" href="{% url 'authors:login' %}">Login</a></li>
+                          </ul>
+                      </li>
+
+                    <li id="dropdown" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle grey-text" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                    Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item grey-text" href="{% url 'posts:category' 1 %}">Python</a></li>
+                            <li><a class="dropdown-item grey-text" href="{% url 'posts:category' 2 %}">JavaScript</a></li>
+                            <li><a class="dropdown-item grey-text" href="{% url 'posts:category' 3 %}">FrameWorks</a></li>
+                            <li><a class="dropdown-item grey-text" href="{% url 'posts:category' 5 %}">Java</a></li>
+                            <li><a class="dropdown-item grey-text" href="{% url 'posts:category' 4 %}">Others</a></li>
+                          </ul>
+                      </li>
+                </ul>
+                <li id="dashboard" class="nav-item d-flex align-self-end">
+                    <i class="fa-solid fa-user nav-link active me-0 pe-0 grey-text" id="icon-dash"></i>
+                    <a class="nav-link active grey-text" href="{% url 'authors:dashboard' %}">Dashboard</a>
+                </li>
+<script href="base_static/global/fontawesome/js/fontawesome.js"></script>

@@ -1,0 +1,72 @@
+<div class="col p-2">
+    <div class="card h-100">    
+        <a href="{% url 'posts:post' post.pk %}">
+            {% if post.cover %}
+                <img src="{{ post.cover.url }}" class="card-img-top">
+            {% else %}
+                 <img src="https://images-na.ssl-images-amazon.com/images/I/71+mDoHG4mL.png" class="card-img-top">
+            {% endif %}
+
+        </a>
+       
+        <div class="card-body">
+
+
+            <a href="{% url 'posts:post' post.pk %}" class="card-link text-decoration-none text-black">
+                <h5 class="card-title">
+                    {{ post.title }}
+                </h5>
+            </a>
+
+
+            <div id="author" class="author card-header-pills">
+                <span class="author-item">
+                    <i class="fas fa-user"></i>
+                    {% if post.author is not None %}
+                        {% if post.author.first_name %}
+                            {{ post.author.first_name }}
+                        {% else %}
+                            {{ post.author.username }}
+                        {% endif %}
+                    {% else %}
+                        Mysterious
+                    {% endif %}
+                </span>
+
+
+                <span class="author-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ post.created_at|date:"d/m/y" }}
+                </span>
+
+                {% if post.category is not None %}
+                <span class="author-item ps-0">
+                    <a class="text-black" href="{% url 'posts:category' post.category.id %}">
+                        <i id="icone-categoria" class="fa-solid fa-laptop-code"></i>
+                        <span>{{ post.category.get_name_display }}</span>
+                    </a>
+                </span>
+                {% else %}
+                <span class="author-item ps-0">
+                        <i id="icone-categoria" class="fa-solid fa-laptop-code"></i>
+                        <span>Waiting...</span>
+                </span>
+                {% endif %}
+
+
+            </div>
+            {% if post.description is not None %}
+            <p class="card-text">{{ post.description }}</p>
+            {% else %}
+            <p class="card-text">I think someone wanted to make a mystery and decided not to put anything in this section...</p>
+            {% endif %}
+        </div>
+
+        <div id="footer" class="card-footer">
+            <a href="{% url 'posts:post' post.pk %}" class="card-link text-decoration-none text-black">
+                <small class="text-muted text-info"><i id="icon-footer" class="fas fa-eye"></i><span
+                        id="texto-footer">See more...</span></small>
+            </a>
+        </div>
+    </div>
+</div>
