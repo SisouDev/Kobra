@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from posts.models import Post
 from utils.django_forms import add_placeholder, strong_password
+from .validators import AuthorPostValidator
 
 
 class RegisterForm(forms.ModelForm):
@@ -188,8 +189,5 @@ class AuthorPostForm(forms.ModelForm):
 
     def clean(self, *args, **kwargs):
         super_clean = super().clean(*args, **kwargs)
-
-        if self._my_errors:
-            raise ValidationError(self._my_errors)
-
+        AuthorPostValidator(self.cleaned_data, ErrorClass=ValidationError)
         return super_clean

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from posts import views
+from posts.views import site
 
 
 class PostURLsTest(TestCase):
@@ -26,4 +26,4 @@ class PostURLsTest(TestCase):
 
     def test_post_search_loads_correct_view_function(self):
         resolved = resolve(reverse('posts:search'))
-        self.assertIs(resolved.func, views.search)
+        self.assertIs(resolved.func, site.search)
