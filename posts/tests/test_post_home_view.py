@@ -1,5 +1,5 @@
 from django.urls import resolve, reverse
-from posts import views
+from posts.views import site
 
 from .test_post_base import PostTestBase
 
@@ -7,7 +7,7 @@ from .test_post_base import PostTestBase
 class PostsHomeViewTest(PostTestBase):
     def test_post_home_views_function_is_correct(self):
         view = resolve(reverse('posts:home'))
-        self.assertIs(view.func, views.home)
+        self.assertIs(view.func, site.home)
 
     def test_post_home_view_returns_status_code_200_ok(self):
         response = self.client.get(reverse('posts:home'))

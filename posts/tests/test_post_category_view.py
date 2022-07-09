@@ -1,5 +1,5 @@
 from django.urls import resolve, reverse
-from posts import views
+from posts.views import site
 
 from .test_post_base import PostTestBase
 
@@ -9,7 +9,7 @@ class PostCategoryViewTest(PostTestBase):
         view = resolve(reverse('posts:category', kwargs={
             'category_id': 1
         }))
-        self.assertIs(view.func, views.category)
+        self.assertIs(view.func, site.category)
 
     def test_post_category_returns_404_not_found(self):
         response = self.client.get(

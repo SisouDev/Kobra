@@ -1,5 +1,5 @@
 from django.urls import resolve, reverse
-from posts import views
+from posts.views import site
 
 from .test_post_base import PostTestBase
 
@@ -9,7 +9,7 @@ class PostDetailViewTest(PostTestBase):
         view = resolve(reverse('posts:post', kwargs={
             'id': 1,
         }))
-        self.assertIs(view.func, views.post)
+        self.assertIs(view.func, site.post)
 
     def test_post_post_returns_404_if_dont_have(self):
         response = self.client.get(

@@ -1,3 +1,7 @@
+from random import SystemRandom
+import string
+from django.db.models.functions import Concat
+from django.db.models import F, Value
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -6,17 +10,19 @@ from tag.models import Tag
 
 
 class Category(models.Model):
-    name = models.CharField(
-        default="PY",
-        max_length=65,
-        choices=(
-            ('PY', 'Python'),
-            ('JS', 'JavaScript'),
-            ('FW', 'FrameWorks'),
-            ('JV', 'Java'),
-            ('OT', 'Others')
-        )
+    choices = (
+        ('PY', 'Python'),
+        ('JS', 'JavaScript'),
+        ('FW', 'FrameWorks'),
+        ('JV', 'Java'),
+        ('OT', 'Others')
     )
+
+    name = models.CharField(
+        max_length=2,
+        choices=choices,
+        null=True,
+        blank=True)
 
     class Meta:
         verbose_name = 'Category'
@@ -26,7 +32,21 @@ class Category(models.Model):
         return self.name
 
 
+class PostManager(models.Manager):
+    def get_published(self):
+        return self.filter(
+            is_published=True,
+        ).annotate(
+            author_full_name=Concat(
+                F('author__first_name'), Value(' '),
+                F('author__last_name'), Value(' ('),
+                F('author__username'), Value(') '),
+            )
+        ).order_by('-id')
+
+
 class Post(models.Model):
+    objects = PostManager()
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=165)
     slug = models.SlugField(unique=True, blank=True, null=True)
@@ -59,7 +79,11 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = f'{slugify(self.title)}'
-            self.slug = slug
+            rand_letters = ''.join(
+                SystemRandom().choices(
+                    string.ascii_letters + string.digits, k=5,
+                )
+            )
+            self.slug = slugify(f'{self.title}-{rand_letters}')
 
         return super().save(*args, **kwargs)

@@ -30,12 +30,26 @@
                         {{ field.help_text }}
                     </span>
                     {% endif %}
-
                 </div>
                 {% endfor %}
                 <div id="botaolegal">
                     <button class="btn btn-primary" id="botao" type="submit">Submit</button>
                 </div>
+                
+                {% if form.errors %}
+                <div class="font-monospace text-center alert alert-warning ">
+                    Have you filled all the fields?
+                </div>
+                {% endif %}
+                {% if messages %}
+                    <div class="d-block-flex p-2 text-center">
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                        </div>
+                {% endfor %}
+                </div>
+                {% endif %}
             </form>
         </div>
 
